@@ -18,8 +18,9 @@ Route::get('/', function () {
 });
 
 use App\Http\Controllers\Admin\SpotController;
-Route::controller(SpotController::class)->prefix('admin')->group(function() {
-    Route::get('spot/create', 'add')->middleware('auth');
+Route::controller(SpotController::class)->prefix('admin')->name('admin.')->middleware('auth')->group(function() {
+    Route::get('spot/create', 'add')->name('spot.add');
+    Route::post('spot/create', 'create')->name('spot.create');
 });
 
 Auth::routes();
