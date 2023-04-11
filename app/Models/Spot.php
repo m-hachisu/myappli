@@ -17,17 +17,13 @@ class Spot extends Model
         'summary' => 'required',
         'prefecture_id' => 'required',
         'area_city' => 'required',
-        'target_start_age' => 'required',
-        'target_end_age' => 'required',
+        'target_start_age' => 'required|integer',
+        'target_end_age' => 'required|integer|gt:target_start_age',
         'start_time_zone' => 'required',
-        'end_time_zone' => 'required',
+        'end_time_zone' => 'required|after:start_time_zone',
         'stay_time' => 'required',
         'kinds' => 'required',
         );
-    
-    protected $fillable = [
-        'prefecture_id',
-    ];
     
     /**
      * 投稿の都道府県の取得(Prefectureモデルとのリレーション)

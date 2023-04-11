@@ -47,4 +47,20 @@ class Handler extends ExceptionHandler
             //
         });
     }
+    
+    /**
+     * <マルチログインの設定>
+     * 認証してない時のリダイレクト先を設定
+     * 認証してない状態でadmin/homeにアクセスした時はadmin/loginに飛ばしたいので、その設定を行う
+    */
+    protected function unauthenticated($request,Throwable $exception)
+    {
+        if($request->expectsJson()) {
+            return respome()->json(['message' => $exception->getMessage()],401);
+        }
+        if($request->is('admin') || $request->is('admin/*')) {
+            return redirect()->guest('/admin/login');
+        }
+        return redirect()->guest($exception->redirectTo ?? route('login'));
+    }
 }

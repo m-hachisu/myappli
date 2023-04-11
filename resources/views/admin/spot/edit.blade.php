@@ -1,17 +1,12 @@
-{{-- layouts/admin.blade.phpを読み込む --}}
 @extends('layouts.admin')
+@section('title', 'スポットの編集')
 
-
-{{-- admin.blade.phpの@yield('title')に'スポットの新規作成'を埋め込む --}}
-@section('title', 'スポットの新規作成')
-
-{{-- admin.blade.phpの@yield('content')に以下のタグを埋め込む --}}
 @section('content')
     <div class="container">
         <div class="row">
-            <div class="col-md-12 mx-auto">
-                <h2>スポット登録画面</h2>
-                <form action="{{ route('admin.spot.create') }}" method="post" enctype="multipart/form-data">
+            <div class="col-md-8 mx-auto">
+                <h2>スポット編集画面</h2>
+                <form action="{{ route('admin.spot.update') }}" method="post" enctype="multipart/form-data">
 
                     @if (count($errors) > 0)
                         <ul>
@@ -23,13 +18,13 @@
                     <div class="form-group row">
                         <label class="col-md-2">スポット名</label>
                         <div class="col-md-10">
-                            <input type="text" class="form-control" name="spot_name" value="{{ old('spot_name') }}">
+                            <input type="text" class="form-control" name="spot_name" value="{{ $spot_form->spot_name }}">
                         </div>
                     </div>
                     <div class="form-group row">
                         <label class="col-md-2">説明</label>
                         <div class="col-md-10">
-                            <textarea class="form-control" name="summary" rows="5">{{ old('summary') }}</textarea>
+                            <textarea class="form-control" name="summary" rows="5">{{ $spot_form->summary }}</textarea>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -114,6 +109,9 @@
                         <label class="col-md-2">画像添付</label>
                         <div class="col-md-10">
                             <input type="file" class="form-control-file" name="image">
+                            <div class="form-text text-info">
+                                設定中: {{ 
+                            </div>
                         </div>
                     </div>
                     @csrf
