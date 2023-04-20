@@ -19,7 +19,10 @@
             </div>
         </div>
         <div class="col-md-8">
-            <a href="{{ route('admin.spot.create') }}">スポット登録画面</a>
+            <a href="{{ route('admin.spot.index') }}">スポット登録一覧へ</a>
+        </div>
+        <div class="col-md-8">
+            <a>ユーザー登録一覧へ</a>
         </div>
     </div>
 </div>

@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-@section('spot', '登録済みスポットの一覧')
+@section('title', '登録済みスポットの一覧')
 
 @section('content')
     <div class="container">
@@ -34,6 +34,7 @@
                                 <th width="10%">ID</th>
                                 <th width="20%">スポット名</th>
                                 <th width="50%">本文</th>
+                                <th width="10%">操作</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -42,6 +43,15 @@
                                     <th>{{ $spot->id }}</th>
                                     <td>{{ Str::limit($spot->spot_name, 100) }}</td>
                                     <td>{{ Str::limit($spot->summary, 250) }}</td>
+                                    <td>
+                                        <div>
+                                            <a href="{{ route('admin.spot.edit', ['id' => $spot->id]) }}">編集</a>
+                                        </div>
+                                        <div>
+                                            <a href="{{ route('admin.spot.delete', ['id' => $spot->id]) }}" onClick='return confirm("削除しますか？");'>削除</a>
+                                            </form>
+                                        </div>
+                                    </td>
                                 </tr>
                             @endforeach
                         </tbody>

@@ -75,7 +75,15 @@ class SpotController extends Controller
         if(empty($spot)) {
             abort(404);
         }
-        return view('admin.spot.edit', ['spot_form' => $spot]);
+        
+        // 都道府県テーブルの全データを取得する
+        $prefectures = Prefecture::all();
+        
+        return view('admin.spot.edit', ['spot_form' => $spot])
+            ->with([
+                'prefectures' => $prefectures,
+                'spot' => $spot,
+                ]);
     }
     
     public function update(Request $request)
@@ -103,6 +111,15 @@ class SpotController extends Controller
         //該当するデータを上書きして保存する
         $spot->fill($spot_form)->save();
         
-        return redirect('admin/spot');
+        return redirect('admin/spot/index');
+    }
+    
+    public function delete(Request $request)
+    {
+        $spot = Spot::find($request->id);
+        
+        $spot->delete();
+        
+        return redirect('admin/spot/index');
     }
 }
