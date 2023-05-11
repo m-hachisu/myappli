@@ -36,6 +36,9 @@
                                             <strong>{{ $errors->first('password') }}</strong>
                                         </span>
                                     @endif
+                                    <a class="btn btn-link" href="{{ url('password/request') }}">
+                                        パスワードを忘れた方はこちら
+                                    </a>
                                 </div>
                             </div>
 

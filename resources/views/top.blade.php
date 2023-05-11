@@ -1,11 +1,54 @@
-@extends('layouts.admin')
-@section('title', 'スポットの編集')
+@extends('layouts.app')
+@section('title', 'TOP')
 
 @section('content')
     <div class="container">
         <div class="row">
             <div class="col-md-8 mx-auto">
-                <h2>スポット編集画面</h2>
+                <h2>お出かけルート検索</h2>
+                {{--<form action="{{ route('top.search') }}" method="post" enctype="multipart/form-data">--}}
+                    <div class="form-group row">
+                        <label class="col-md-2">エリア(県)</label>
+                        <div class=col-md-2>
+                            <select type="text" class="form-control" name="prefecture_id" required>
+                                <option disabled style='display:none;' @if (empty($spot->prefecture_id)) selected @endif>選択してください</option>
+                                @foreach($prefectures as $pref)
+                                <option value="{{ $pref->id }}" @if (isset($spot->prefecture_id) && ($spot->prefecture_id === $pref->id)) selected @endif>{{ $pref->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-2">エリア(エリア)</label>
+                        <div class=col-md-3>
+                            <input type="text" class="col-md-8" name="area_city" value="{{ $spot_form->area_city }}">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-2">季節</label>
+                        <div class="col-md-3">
+                            {{Form::select('season', ['' => '選択してください', '0' => '春', '1' => '夏','2' => '秋', '3' => '冬', '4' => 'いつでも'], $spot_form->season, ['class' => 'form-control'])}}
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-2">天気</label>
+                        <div class="col-md-3">
+                            {{Form::select('weather', ['' => '選択してください', '0' => '晴れ', '1' => '雨','2' => '曇り', '3' => '雪', '4' => 'いつでも'], $spot_form->weather, ['class' => 'form-control'])}}
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-2">時間帯</label>
+                        <div class="col-md-2">
+                            <input type="time" name="start_time_zone" value="{{ $spot_form->start_time_zone }}">
+                        </div>
+                        <div class="col-md-2">
+                            <input type="time" name="end_time_zone" value="{{ $spot_form->end_time_zone }}">
+                        </div>
+                    </div>
+                </form>
+                
+                {{--
+                
                 <form action="{{ route('admin.spot.update') }}" method="post" enctype="multipart/form-data">
 
                     @if (count($errors) > 0)
@@ -27,18 +70,7 @@
                             <textarea class="form-control" name="summary" rows="5">{{ $spot_form->summary }}</textarea>
                         </div>
                     </div>
-                    <div class="form-group row">
-                        <label class="col-md-2">季節</label>
-                        <div class="col-md-3">
-                            {{Form::select('season', ['' => '選択してください', '0' => '春', '1' => '夏','2' => '秋', '3' => '冬', '4' => 'いつでも'], $spot_form->season, ['class' => 'form-control'])}}
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label class="col-md-2">天気</label>
-                            <div class="col-md-3">
-                                {{Form::select('weather', ['' => '選択してください', '0' => '晴れ', '1' => '雨','2' => '曇り', '3' => '雪', '4' => 'いつでも'], $spot_form->weather, ['class' => 'form-control'])}}
-                            </div>
-                    </div>
+                    
                     <div class="form-group row">
                         <label class="col-md-2">対象年齢</label>
                         <div class="col-md-2">
@@ -48,38 +80,14 @@
                             <input type="number" class="col-md-5" name="target_end_age" value="{{ $spot_form->target_end_age }}">
                         </div>
                     </div>
-                    <div class="form-group row">
-                        <label class="col-md-2">時間帯</label>
-                        <div class="col-md-2">
-                            <input type="time" name="start_time_zone" value="{{ $spot_form->start_time_zone }}">
-                        </div>
-                        <div class="col-md-2">
-                            <input type="time" name="end_time_zone" value="{{ $spot_form->end_time_zone }}">
-                        </div>
-                    </div>
+                    
                     <div class="form-group row">
                         <label class="col-md-2">滞在時間</label>
                         <div class="col-md-10">
                             <input type="number" class="" name="stay_time" value="{{ $spot_form->stay_time }}">
                         </div>
                     </div>
-                    <div class="form-group row">
-                        <label class="col-md-2">エリア(県)</label>
-                        <div class=col-md-2>
-                            <select type="text" class="form-control" name="prefecture_id" required>
-                                <option disabled style='display:none;' @if (empty($spot->prefecture_id)) selected @endif>選択してください</option>
-                                @foreach($prefectures as $pref)
-                                    <option value="{{ $pref->id }}" @if (isset($spot->prefecture_id) && ($spot->prefecture_id === $pref->id)) selected @endif>{{ $pref->name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label class="col-md-2">エリア(エリア)</label>
-                        <div class=col-md-3>
-                            <input type="text" class="col-md-8" name="area_city" value="{{ $spot_form->area_city }}">
-                        </div>
-                    </div>
+                    
                     <div class="form-group row">
                         <label class="col-md-2">種別</label>
                         <div class="col-md-3">
@@ -110,7 +118,9 @@
                     <div>
                         <a href="{{ route('admin.spot.index') }}">一覧へ戻る</a>
                     </div>
-                </form>
+                
+                --}}
+                
             </div>
         </div>
     </div>

@@ -100,6 +100,9 @@
                     @csrf
                     <input type="submit" class="btn btn-primary" value="登録">
                 </form>
+                <div>
+                     <a href="{{ route('admin.spot.index') }}">一覧へ戻る</a>
+                </div>
             </div>
         </div>
     </div>

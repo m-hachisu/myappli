@@ -38,4 +38,15 @@ Route::view('/admin/register', 'admin/register');
 Route::post('/admin/register', [App\Http\Controllers\Admin\RegisterController::class, 'register']);
 Route::view('/admin/home', 'admin/home')->middleware('auth:admin');
 
-Route::resource('admin/user', 'UserController')->only(['index', 'store', 'update', 'destroy']);
+use App\Http\Controllers\Admin\UserController;
+Route::controller(UserController::class)->prefix('admin')->name('admin.')->middleware('auth:admin')->group(function() {
+    Route::get('user/index', 'index')->name('user.index');
+    Route::get('user/edit', 'edit')->name('user.edit');
+    Route::post('user/edit', 'update')->name('user.update');
+    Route::get('user/delete', 'delete')->name('user.delete');
+});
+
+use App\Http\Controllers\TopController;
+Route::controller(TopController::class)->group(function(){
+   Route::get('top', 'show')->name('top.show'); 
+});

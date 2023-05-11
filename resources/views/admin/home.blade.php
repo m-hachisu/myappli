@@ -3,26 +3,14 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Dashboard') }}</div>
-
-                <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-
-                    {{ __('You are logged in!') }}
-                </div>
+        <h2>操作一覧</h2>
+        <div class=index-console>
+            <div class="col-md-8">
+                <a href="{{ route('admin.spot.index') }}">スポット登録一覧</a>
             </div>
-        </div>
-        <div class="col-md-8">
-            <a href="{{ route('admin.spot.index') }}">スポット登録一覧へ</a>
-        </div>
-        <div class="col-md-8">
-            <a>ユーザー登録一覧へ</a>
+            <div class="col-md-8">
+                <a href="{{ route('admin.user.index') }}">ユーザー登録一覧</a>
+            </div>
         </div>
     </div>
 </div>

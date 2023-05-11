@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -14,94 +15,35 @@ class UserController extends Controller
      */
     public function index()
     {
-        $per_page = 3; // １ページごとの表示件数
-        $users = \App\User::paginate($per_page);
-        return view('admin.user.index')->with('users', $users);
+        $posts = User::all();
+        
+        return view('admin.user.index', ['posts' => $posts]);
     }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    
+    public function update(Request $request)
     {
-        //
+        // Validationをかける
+        $this->validate($request, User::$rules);
+        // User Modelからデータを取得する
+        $user = User::find($request->id);
+        // 送信されてきたフォームデータを格納する
+        $user_form = $request->all();
+        
+        unset($user_form['remove']);
+        unset($user_form['_token']);
+        
+        //該当するデータを上書きして保存する
+        $user->fill($user_form)->save();
+        
+        return redirect('admin/user/index');
     }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    
+    public function delete(Request $request)
     {
-        // [ご注意]：バリデーションは省略してます
-
-        $user = new \App\User();
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->password = bcrypt($request->password);
-        $result = $user->save();
-        return ['result' => $result];
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
-     */
-    public function show(User $user)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(User $user)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, User $user)
-    {
-       // [ご注意]：バリデーションは省略してます
-
-        $user->name = $request->name;
-        $user->email = $request->email;
-
-        if($request->filled('password')) { // パスワード入力があるときだけ変更
-
-            $user->password = bcrypt($request->password);
-
-        }
-
-        $result = $user->save();
-        return ['result' => $result];
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(User $user)
-    {
-        $result = $user->delete();
-        return ['result' => $result];
+        $user = User::find($request->id);
+        
+        $user->delete();
+        
+        return redirect('admin/user/index');
     }
 }

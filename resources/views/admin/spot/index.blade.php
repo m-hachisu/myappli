@@ -9,6 +9,7 @@
         <div class="row">
             <div class="col-md-4">
                 <a href="{{ route('admin.spot.add') }}" role="button" class="btn btn-primary">新規作成</a>
+                <a href="{{ route('admin.user.index') }}" role="button" class="btn btn-primary">ユーザー一覧</a>
             </div>
             <div class="col-md-8">
                 <form action="{{ route('admin.spot.index') }}" method="get">
