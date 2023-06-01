@@ -40,10 +40,10 @@
                         <!-- Authentication Links -->
                         @guest
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ url('admin/login') }}">{{ __('Login') }}</a>
+                                <a class="nav-link" href="{{ url('admin/login') }}">{{ __('ログイン') }}</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ url('admin/register') }}">{{ __('Register') }}</a>
+                                <a class="nav-link" href="{{ url('admin/register') }}">{{ __('ユーザー登録') }}</a>
                             </li>
                         @else
                             <li class="nav-item dropdown">

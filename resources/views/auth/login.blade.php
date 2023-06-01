@@ -1,11 +1,11 @@
-@extends('layouts.admin')
+@extends('layouts.app')
 
 @section('content')
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="login-box card">
-                    <div class="login-header card-header mx-auto">{{ __('messages.login') }}</div>
+                    <div class="col-md-8 text-center mx-auto">{{ __('messages.login') }}</div>
 
                     <div class="login-body card-body">
                         <form method="POST" action="{{ route('login') }}">
@@ -36,9 +36,6 @@
                                             <strong>{{ $errors->first('password') }}</strong>
                                         </span>
                                     @endif
-                                    <a class="btn btn-link" href="{{ url('password/request') }}">
-                                        パスワードを忘れた方はこちら
-                                    </a>
                                 </div>
                             </div>
 
@@ -58,9 +55,21 @@
                                         {{ __('messages.login') }}
                                     </button>
                                 </div>
+                                 <a class="btn btn-link" href="{{ url('password/request') }}">
+                                    パスワードを忘れた方はこちら
+                                 </a>
                             </div>
                         </form>
                     </div>
+                </div>
+            </div>
+            <div class="col-md-8 border p-2 m-4">
+                <h4>無料のユーザー登録で、次のサービスがご利用いただけます。</h4>
+                    <li>お出かけスポットのレビュー</li>
+                    <li>お出かけスポット、お出かけコースのお気に入り登録</li>
+                    <li>お子様情報反映によるお出かけコース検索時の最適化</li>
+                <div class="col-md-12 text-center p-4">
+                    <button type="button" class="btn btn-primary" onclick="location.href='{{ route('register') }}'">{{ __('ユーザー登録(無料)はこちらから') }}</button>
                 </div>
             </div>
         </div>

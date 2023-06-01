@@ -5,8 +5,8 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('ユーザー情報') }}</div>
-
+                <div class="card-header">{{ __('ユーザー登録(無料)') }}</div>
+                
                 <div class="card-body">
                     <form method="POST" action="{{ route('register') }}">
                         @csrf
@@ -69,6 +69,10 @@
                             </div>
                         </div>
                     </form>
+                </div>
+                <div class="card-header">{{ __('お子様情報(任意)') }}</div>
+                <div class="card-body">
+                    
                 </div>
             </div>
         </div>

@@ -48,5 +48,6 @@ Route::controller(UserController::class)->prefix('admin')->name('admin.')->middl
 
 use App\Http\Controllers\TopController;
 Route::controller(TopController::class)->group(function(){
-   Route::get('top', 'show')->name('top.show'); 
+    Route::get('spot/top', 'show')->name('spot.show'); 
+    Route::post('spot/index','index')->name('spot.index');
 });
