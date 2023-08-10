@@ -7,16 +7,12 @@
             <div class="col-md-10 mx-auto">
                 <h2>お出かけルート検索</h2>
                 <div class="form-group row border p-2">
-                    {{-- <form method="post" action="{{ route('spot.index') }}"> --}}
+                    <form method="get" action="{{ route('spot.index') }}">
                         <div class="form-group row">
                             <label class="col-md-2">エリア(県)</label>
                             <div class=col-md-3>
-                                <select type="text" class="form-control" name="prefecture_id" required>
-                                    <option disabled style='display:none;' @if (empty($spot->prefecture_id)) selected @endif>選択してください</option>
-                                    @foreach($prefectures as $pref)
-                                    <option value="{{ $pref->id }}" @if (isset($spot->prefecture_id) && ($spot->prefecture_id === $pref->id)) selected @endif>{{ $pref->name }}</option>
-                                    @endforeach
-                                </select>
+                                {{Form::select('prefecture_id', $prefectures, null, ['class' => 'form-control' , 'placeholder' => '選択してください'])}}
+                                
                             </div>
                             <label class="col-md-2">エリア(エリア)</label>
                             <div class=col-md-5>
@@ -56,18 +52,18 @@
                 <div class="form-group row border p-2">
                     <div class="col-md-6">
                         <div class="caption mx-auto">
-                            <div class="image">
-                                @if ($headline->image_path)
-                                    <img src="{{ secure_asset('storage/image/' . $headline->image_path) }}">
-                                @endif
-                            </div>
                             <div class="title p-2">
-                                <h3>{{ Str::limit($headline->spot_name, 70) }}</h3>
+                                <h3>{{ Str::limit($posts->spot_name, 70) }}</h3>
+                            </div>
+                            <div class="image">
+                                @if ($posts->image_path)
+                                    <img src="{{ secure_asset('storage/image/' . $posts->image_path) }}" width="100%">
+                                @endif
                             </div>
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <p class="body mx-auto">{{ Str::limit($headline->summary, 650) }})</p>
+                        <p class="body mx-auto">{{ Str::limit($posts->summary, 650) }})</p>
                     </div>
                 </div>
             </div>
@@ -79,9 +75,9 @@
                 <h2>授乳室・おむつ替えスポット</h2>
                 <div class="form-group row border p-2">
                     <div id="map" style="height:500px">
-                        <script src="{{ asset('/js/setLocation.js') }}"></script>
-                        <script src="{{ asset('/js/result.js') }}"></script>
-                        <script src="https://maps.googleapis.com/maps/api/jslanguage=ja&region=JP&key=AIzaSyBrAYTpz9zu0CARYKdQNyYxjuICkA5ajI&callback=initMap" async defer></script>
+                        
+                        <script src="{{ secure_asset('/js/result.js') }}"></script>
+                        <script src="https://maps.googleapis.com/maps/api/js?language=ja&region=JP&key=AIzaSyD-Wojejg_mtshEYBj_AJdBdGzqC_sH4Hc&callback=initMap" defer></script>
                     </div>
                 </div>
             </div>
@@ -91,9 +87,25 @@
         <div class="row">
             <div class="col-md-10 mx-auto">
                 <h2>子連れで行けるおすすめ飲食店</h2>
+                @isset($eat_spot)
                 <div class="form-group row border p-2">
-                    
+                    <div class="col-md-6">
+                        <div class="caption mx-auto">
+                            <div class="title p-2">
+                                <h3>{{ Str::limit($eat_spot->spot_name, 70) }}</h3>
+                            </div>
+                            <div class="image">
+                                @if ($eat_spot->image_path)
+                                    <img src="{{ secure_asset('storage/image/' . $eat_spot->image_path) }}" width="100%">
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <p class="body mx-auto">{{ Str::limit($eat_spot->summary, 650) }})</p>
+                    </div>
                 </div>
+                @endisset
             </div>
         </div>
     </div>

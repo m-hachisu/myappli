@@ -10,7 +10,7 @@ class Spot extends Model
 {
     use HasFactory;
     
-    protected $guarded = array('id');
+        protected $guarded = array('id');
     
     public static $rules = array(
         'spot_name' => 'required',

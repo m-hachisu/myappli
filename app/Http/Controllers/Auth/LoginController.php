@@ -26,7 +26,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = RouteServiceProvider::HOME;
+    protected $redirectTo = '/spot/top';
 
     /**
      * Create a new controller instance.
@@ -37,4 +37,9 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
+    
+    protected function loggedOut(\Illuminate\Http\Request $request) {
+      return redirect('/spot/top');
+    }
+    
 }

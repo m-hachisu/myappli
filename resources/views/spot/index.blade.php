@@ -18,12 +18,7 @@
                     <div class="form-group row">
                         <label class="col-md-2">エリア(県)</label>
                         <div class=col-md-3>
-                            <select type="text" class="form-control" name="prefecture_id" required>
-                                <option disabled style='display:none;' @if (empty($spot->prefecture_id)) selected @endif>選択してください</option>
-                                @foreach($prefectures as $pref)
-                                <option value="{{ $pref->id }}" @if (isset($spot->prefecture_id) && ($spot->prefecture_id === $pref->id)) selected @endif>{{ $pref->name }}</option>
-                                @endforeach
-                            </select>
+                            {{Form::select('prefecture_id', $prefectures, $prefecture_id, ['class' => 'form-control' , 'placeholder' => '選択してください'])}}
                         </div>
                         <label class="col-md-2">エリア(エリア)</label>
                         <div class=col-md-5>
@@ -61,8 +56,28 @@
             <div class="col-md-10 mx-auto">
                 <h2>お出かけルート検索結果</h2>
                 <div class="form-group row border p-2">
-                    
+                    @foreach($posts as $post)
+                    <div class="post">
+                        <div class="row">
+                            <div class="text col-md-6">
+                                <div class="spot_name">
+                                    {{ Str::limit($post->spot_name, 150) }}
+                                </div>
+                                <div class="samary mt-3">
+                                    {{ Str::limit($post->summary, 1500) }}
+                                </div>
+                            </div>
+                            <div class="image col-md-6 text-right mt-4">
+                                @if ($post->image_path)
+                                    <img src="{{ secure_asset('storage/image/' . $post->image_path) }}" width="100%">
+                                @endif
+                            </div>
+                            <a href="{{ route('spot.add', ['id' => $post->id]) }}">詳細</a>
+                        </div>
+                    </div>
+                    <hr color="#c0c0c0">
+                @endforeach
                 </div>
             </div>
         </div>
-        
+@endsection

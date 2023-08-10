@@ -16,8 +16,14 @@ class Prefecture extends Model
 /**
    *都道府県に紐づく投稿の取得(spotモデルとのリレーション)
    */
-   public function spots()
-   {
-       return $this->hasMany(spot::class, 'prefecture_id', 'id');
-   }
+    public function spots()
+    {
+        return $this->hasMany(spot::class, 'prefecture_id', 'id');
+        
+    }
+   
+    public static function getSelectValue()
+    {
+        return Prefecture::all()->pluck("name", "id");
+    }
 }

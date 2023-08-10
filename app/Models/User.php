@@ -41,4 +41,23 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+    
+    public function children()
+    {
+        return $this->hasMany(Child::class);
+    }
+    
+    public function hasChildren()
+    {
+        return !$this->children->isEmpty();
+    }
+    
+    public function getChildAge()
+    {
+        $child = $this->children->first();
+        $birthday = $child->age;
+        $today = date('Ymd');
+        $birthday = str_replace("-", "", $birthday);
+        return floor(($today - $birthday) / 10000);
+    }
 }

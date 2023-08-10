@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
+use App\Models\Child;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -29,7 +30,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = RouteServiceProvider::HOME;
+    protected $redirectTo = '/spot/top';
 
     /**
      * Create a new controller instance.
@@ -53,6 +54,9 @@ class RegisterController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'age' => ['required_with:child_name','date','nullable'],
+            'child_name' => ['string','max:255','nullable'],
+            'gender' => ['required_with:child_name','integer','nullable'],
         ]);
     }
 
@@ -64,10 +68,21 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
+        
+        if (isset($data['child_name'])) {
+            Child::create([
+                'user_id' => $user->id,
+                'child_name' => $data['child_name'],
+                'gender' => $data['gender'],
+                'age' => $data['age'],
+            ]);
+        }
+        
+        return $user;
     }
 }

@@ -5,10 +5,11 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
+                <form method="POST" action="{{ route('register') }}">
                 <div class="card-header">{{ __('ユーザー登録(無料)') }}</div>
                 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('register') }}">
+                    
                         @csrf
 
                         <div class="row mb-3">
@@ -61,21 +62,53 @@
                             </div>
                         </div>
 
-                        <div class="row mb-0">
-                            <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('登録') }}
-                                </button>
-                            </div>
-                        </div>
-                    </form>
+
                 </div>
                 <div class="card-header">{{ __('お子様情報(任意)') }}</div>
                 <div class="card-body">
-                    
+                     <div class="row mb-3">
+                        <label for="child_name" class="col-md-4 col-form-label text-md-end">{{ __('ニックネーム') }}</label>
+                            <div class="col-md-6">
+                                <input id="child_name" type="text" class="form-control @error('child_name') is-invalid @enderror" name="child_name" value="{{ old('child_name') }}" autocomplete="name" autofocus>
+
+                                @error('child_name')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        <label for="gender" class="col-md-4 col-form-label text-md-end">{{ __('性別') }}</label>
+                            <div class="col-md-6">
+                                {{Form::select('gender', ['' => '選択してください', '0' => '男の子', '1' => '女の子','2' => 'その他'], null, ['class' => 'form-control'])}}
+                                @error('gender')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        <label for="age" class="col-md-4 col-form-label text-md-end">{{ __('誕生日') }}</label>
+                            <div class="col-md-6">
+                                <input type="date" name="age">
+                                @error('age')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                    <div class="row mb-0">
+                        <div class="col-md-6 offset-md-4">
+                            <button type="submit" class="btn btn-primary">
+                                {{ __('登録') }}
+                            </button>
+                        </div>
+                    </div>
                 </div>
+            </form>
             </div>
         </div>
     </div>
 </div>
+@foreach ($errors->all() as $error)
+  {{$error}}
+@endforeach
 @endsection
